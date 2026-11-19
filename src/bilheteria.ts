@@ -8,6 +8,7 @@ import {
   DadosInvalidosErro,
   Evento,
   NaoEncontradoErro,
+  PagamentoErro,
 } from "./dominio.js";
 import { direitoAMeia } from "./regras.js";
 import { calcularTotal, montarIngressos } from "./preco.js";
@@ -48,7 +49,12 @@ export class Bilheteria {
     );
     const total = calcularTotal(ingressos);
 
-    await this.#pagar(total);
+    try {
+      await this.#pagar(total);
+    } catch {
+      evento.liberar(poltronas);
+      throw new PagamentoErro("A operadora não aprovou o pagamento.");
+    }
 
     this.#ultimoReservaId += 1;
     return {
