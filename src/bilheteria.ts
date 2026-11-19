@@ -13,6 +13,17 @@ import {
 import { direitoAMeia } from "./regras.js";
 import { calcularTotal, montarIngressos } from "./preco.js";
 
+function comTempoLimite<T>(promessa: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const limite = new Promise<never>((_, rejeitar) => {
+    timer = setTimeout(
+      () => rejeitar(new Error("tempo esgotado")),
+      ms
+    );
+  });
+  return Promise.race([promessa, limite]).finally(() => clearTimeout(timer));
+}
+
 export class Bilheteria {
   #eventos: Evento[];
   #pagar: ConfigBilheteria["pagar"];
@@ -50,7 +61,10 @@ export class Bilheteria {
     const total = calcularTotal(ingressos);
 
     try {
-      await this.#pagar(total);
+      await comTempoLimite(
+        this.#pagar(total),
+        this.#limitePagamentoMs
+      );
     } catch {
       evento.liberar(poltronas);
       throw new PagamentoErro("A operadora não aprovou o pagamento.");
