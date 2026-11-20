@@ -59,7 +59,7 @@ export class Bilheteria {
       direitoAMeia
     );
     const total = calcularTotal(ingressos);
-
+    
     try {
       await comTempoLimite(
         this.#pagar(total),

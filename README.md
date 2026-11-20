@@ -28,21 +28,24 @@ npm run bench     # com o serviço no ar: 200 pedidos simultâneos no evento 1, 
 Exemplo de pedido:
 
 ```bash
-curl -X POST localhost:3000/reservas -H 'Content-Type: application/json' \
-  -d '{"eventoId":1,"ingressos":[{"nome":"Ana","idade":20,"estudante":true,"pcd":false,"poltrona":7}]}'
+curl.exe http://localhost:3000/eventos
+
+curl.exe -X POST http://localhost:3000/reservas -H "Content-Type: application/json" -d '{\"eventoId\":1,\"ingressos\":[{\"nome\":\"Ana\",\"idade\":20,\"estudante\":true,\"pcd\":false,\"poltrona\":7}]}'
+
 ```
 
 ---
 
 ## Preencham (avaliado no vídeo)
 
-**Link do vídeo:** 
+**Link do vídeo:**
+> https://youtu.be/ieQDc7NVwr4
 
 ### Integrantes
 
-| Nome | Usuário do GitHub | Parte principal |
-| :--- | :--- | :--- |
-Gustavo Henrique de Lucena Paiva | intghp | O projeto inteiro |
+| RGM |Nome | Usuário do GitHub | Parte principal |
+| :--- | :--- | :--- | :---
+34371168 |Gustavo Henrique de Lucena Paiva | intghp | O projeto inteiro |
 | | | |
 
 ### Decisões
